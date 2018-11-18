@@ -5,9 +5,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.groupgame.game.GroupProject;
 import com.groupgame.game.sprites.Obstacle;
 import com.groupgame.game.sprites.Theft;
+
+import java.util.Iterator;
+import java.util.Random;
 
 public class PlayState extends State {
 
@@ -17,17 +24,24 @@ public class PlayState extends State {
     public static int count =0;   //计数器，计点击屏幕次数
     private Texture bg;
     private Boolean isInleft;
-    BitmapFont font = new BitmapFont();
-
-
+    private BitmapFont font = new BitmapFont();
+    private Array<Obstacle> obstacles;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
-        theft=new Theft(38,180);
-        leftObstacle=new Obstacle(38,600);
-        rightObstacle=new Obstacle(480-38-30,650);
+        theft=new Theft(38,150);
+        leftObstacle=new Obstacle(600);
+
         bg=new Texture("background.png");
-        //cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT/2);  //Sets this camera to an orthographic projection
+        cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);  //Sets this camera to an orthographic projection
+
+        obstacles = new Array<Obstacle>();
+        Obstacle obstacle;
+        for(int i=1;i<=16;i++) {
+            obstacle = new Obstacle(i*(Obstacle.OBS_GAP+Obstacle.OBS_H));
+            obstacles.add(obstacle);
+        }
+
     }
 
     @Override
@@ -50,7 +64,18 @@ public class PlayState extends State {
         handleInput();
         theft.update(dt);
         leftObstacle.update(dt);
-        rightObstacle.update(dt);
+
+        for(int i=0;i<obstacles.size;i++){
+            Obstacle obstacle = obstacles.get(i);
+
+//            if(obstacle.getPosition().y<-200){
+//                obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
+//            }
+
+            if(obstacle.collides(theft.getBounds())){
+                gsm.set(new GameOverState(gsm));
+            }
+        }
 
         if(leftObstacle.collides(theft.getBounds())){
             gsm.set(new GameOverState(gsm));
@@ -59,22 +84,34 @@ public class PlayState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        //sb.setProjectionMatrix(cam.combined);//set orthographic projection
+        cam.update();
+        sb.setProjectionMatrix(cam.combined);//set orthographic projection
+
         sb.begin();
         sb.draw(bg,0,0,GroupProject.WIDTH,GroupProject.HEIGHT);
         sb.draw(leftObstacle.getObsRegion(),leftObstacle.getPosition().x,leftObstacle.getPosition().y);
-        sb.draw(rightObstacle.getObsRegion(),rightObstacle.getPosition().x,rightObstacle.getPosition().y);
         sb.draw(theft.getRegion(),theft.getPosition().x,theft.getPosition().y);
         font.draw(sb,String.valueOf(count),240,700);
         font.setColor(Color.BLACK);
 
+        for(Obstacle obstacle :obstacles){
+            sb.draw(obstacle.getObsRegion(),obstacle.getPosition().x,obstacle.getPosition().y);
+        }
+
         sb.end();
+
+
 
     }
 
     @Override
     public void dispose() {
         theft.dispose();
+
+        for(Obstacle obstacle : obstacles){
+            obstacle.dispose();
+        }
+
 
     }
 }

@@ -39,6 +39,7 @@ public class Theft {
         //velocity.scl(dt);
         //position.add(0,velocity.y,0);
         //velocity.scl(1/dt);
+        bounds.setPosition(position.x,position.y);
     }
 
 
