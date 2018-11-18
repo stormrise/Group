@@ -11,25 +11,26 @@ import com.groupgame.game.states.MenuState;
 public class GroupProject extends ApplicationAdapter {
 	public static final int WIDTH=480;
 	public static final int HEIGHT=800;
+	public static final int BRICK=38;
+
 	public static final String TITLE="Group Game";
 	private  GameStateManager gsm;
 
-
 	private SpriteBatch batch;
-	Texture img;
+
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		gsm =new GameStateManager();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
-		//img = new Texture("badlogic.jpg");
+
 		gsm.push(new MenuState(gsm));
 	}
 
 	@Override
 	public void render () {
-		//Gdx.gl.glClearColor(1, 0, 0, 1);
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gsm.update(Gdx.graphics.getDeltaTime()); //获取时间间隔
 		gsm.render(batch);
