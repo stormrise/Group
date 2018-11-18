@@ -19,8 +19,7 @@ import java.util.Random;
 public class PlayState extends State {
 
     private Theft theft;
-    private Obstacle leftObstacle;
-    private Obstacle rightObstacle;
+
     public static int count =0;   //计数器，计点击屏幕次数
     private Texture bg;
     private Boolean isInleft;
@@ -30,8 +29,6 @@ public class PlayState extends State {
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         theft=new Theft(38,150);
-        leftObstacle=new Obstacle(600);
-
         bg=new Texture("background.png");
         cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);  //Sets this camera to an orthographic projection
 
@@ -63,23 +60,23 @@ public class PlayState extends State {
     public void update(float dt) {
         handleInput();
         theft.update(dt);
-        leftObstacle.update(dt);
+
 
         for(int i=0;i<obstacles.size;i++){
             Obstacle obstacle = obstacles.get(i);
+            obstacle.update(dt);
 
-//            if(obstacle.getPosition().y<-200){
-//                obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
-//            }
+            if(obstacle.getPosition().y<-200){
+                obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
+            }
 
             if(obstacle.collides(theft.getBounds())){
                 gsm.set(new GameOverState(gsm));
+                count=0;
             }
         }
 
-        if(leftObstacle.collides(theft.getBounds())){
-            gsm.set(new GameOverState(gsm));
-        }
+
     }
 
     @Override
@@ -89,8 +86,8 @@ public class PlayState extends State {
 
         sb.begin();
         sb.draw(bg,0,0,GroupProject.WIDTH,GroupProject.HEIGHT);
-        sb.draw(leftObstacle.getObsRegion(),leftObstacle.getPosition().x,leftObstacle.getPosition().y);
         sb.draw(theft.getRegion(),theft.getPosition().x,theft.getPosition().y);
+
         font.draw(sb,String.valueOf(count),240,700);
         font.setColor(Color.BLACK);
 
