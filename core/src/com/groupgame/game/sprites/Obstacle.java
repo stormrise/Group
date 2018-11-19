@@ -26,7 +26,7 @@ public class Obstacle {
     public Obstacle(float y){
 
         obstacle=new Texture("bar_left.png");//30,181
-        obsRegion = new TextureRegion(obstacle,30,MathUtils.random(20,181));//MathUtils.random(10,181)
+        obsRegion = new TextureRegion(obstacle,30,MathUtils.random(30,181));//MathUtils.random(10,181)
 
         if(MathUtils.randomBoolean()){
             position=new Vector2(38,y);

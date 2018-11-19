@@ -1,6 +1,7 @@
 package com.groupgame.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -46,6 +47,7 @@ public class GameOverState extends State{
         sb.draw(gameover, cam.position.x - gameover.getWidth() / 2, cam.position.y);
         font.draw(sb,"Touch Anywhere To Restart",cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight());
         font.draw(sb,"Score:"+String.valueOf(PlayState.count-1),cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight()-50);
+        font.setColor(Color.BLACK);
 
         sb.end();
     }
