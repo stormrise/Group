@@ -72,7 +72,7 @@ public class PlayState extends State {
 
             if(obstacle.collides(theft.getBounds())){
                 gsm.set(new GameOverState(gsm));
-                count=0;
+
             }
         }
 

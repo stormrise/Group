@@ -11,7 +11,7 @@ import com.groupgame.game.states.PlayState;
 import java.util.Random;
 
 public class Obstacle {
-    public static final int OBS_GAP = 100;
+    public static final int OBS_GAP = 120;
     public static final int OBS_H = 181;
 
     private Texture obstacle;
@@ -19,7 +19,7 @@ public class Obstacle {
     private Rectangle bounds;
     private Vector2 position, velocity;
 
-    private int GRAVITY=-15;
+    private int GRAVITY=-1;
 
 
 
@@ -41,7 +41,7 @@ public class Obstacle {
     }
 
     public void update(float dt){
-        velocity.add(0,GRAVITY-(PlayState.count+1)/10);
+        velocity.add(0,GRAVITY-(PlayState.count+1)/20);
         velocity.scl(dt);
         position.add(0,velocity.y);
 
