@@ -46,7 +46,7 @@ public class GameOverState extends State{
         sb.draw(background, 0,0);
         sb.draw(gameover, cam.position.x - gameover.getWidth() / 2, cam.position.y);
         font.draw(sb,"Touch Anywhere To Restart",cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight());
-        font.draw(sb,"Score:"+String.valueOf(PlayState.count-1),cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight()-50);
+        font.draw(sb,"Score:"+String.valueOf(PlayState.count),cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight()-50);
         font.setColor(Color.BLACK);
 
         sb.end();

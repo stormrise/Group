@@ -122,6 +122,7 @@ public class Theft extends Sprite {
 //            break;
 //        }
         region=deadregion;
+        bounds.setPosition(position.x,position.y);
 
     }
 

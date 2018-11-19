@@ -22,11 +22,12 @@ public class PlayState extends State {
     private Theft theft;
 
     public static int count =0;   //计数器，计点击屏幕次数
+    public static int nums =0;
     private Texture bg;
     public static Boolean isInleft = true;
     private BitmapFont font = new BitmapFont();
     private Array<Obstacle> obstacles;
-    float time = 5f;
+    float time = 1f;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -46,10 +47,10 @@ public class PlayState extends State {
     @Override
     protected void handleInput() {
         if(Gdx.input.justTouched()){
-            if(count%2==0){   //如果余数是0则向右移动；
+            if(theft.getPosition().x==GroupProject.BRICK){   //如果余数是0则向右移动；count%2==0
                 isInleft=true;
                 theft.jump(isInleft);
-            }else{   //否则向左移动；
+            }else if(theft.getPosition().x==GroupProject.WIDTH-GroupProject.BRICK-theft.getRegion().getRegionWidth()){   //否则向左移动；
                 isInleft=false;
                 theft.jump(isInleft);
             }
@@ -70,14 +71,15 @@ public class PlayState extends State {
 
             if(obstacle.getPosition().y<-200){
                 obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
+                nums++;
             }
 
             if(obstacle.collides(theft.getBounds())){
-                time -= 0.3f;
+                time -= 0.8f;
                 theft.killed();
-                if(time<0) {
+
                     gsm.set(new GameOverState(gsm));
-                }
+
             }
         }
 

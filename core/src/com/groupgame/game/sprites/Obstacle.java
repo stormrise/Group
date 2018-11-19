@@ -42,7 +42,7 @@ public class Obstacle extends Sprite {
     }
 
     public void update(float dt){
-        velocity.add(0,-0.01f-(PlayState.count+1)/100f);
+        velocity.add(0,-0.01f-(PlayState.count+1)/100f+PlayState.nums/300f);
         velocity.scl(dt);
         position.add(0,velocity.y);
 

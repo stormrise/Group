@@ -18,6 +18,7 @@ public class MenuState extends State {
         super(gsm);
         background=new Texture("background.png");  //设置背景图片
         butt=new Texture("butt.png");  //设置开始按钮
+        cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);
     }
 
     @Override
@@ -38,6 +39,9 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        cam.update();
+        sb.setProjectionMatrix(cam.combined);//set orthographic projection
+
         sb.begin();
         sb.draw(background,0,0,GroupProject.WIDTH,GroupProject.HEIGHT);  //设置背景图位置
         sb.draw(butt,(GroupProject.WIDTH/2)-(butt.getWidth()/2),GroupProject.HEIGHT/2);
