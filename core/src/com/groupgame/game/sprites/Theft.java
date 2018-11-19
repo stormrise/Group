@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.groupgame.game.GroupProject;
+import com.groupgame.game.states.PlayState;
 
 import java.util.Random;
 
@@ -35,10 +36,24 @@ public class Theft {
     }
 
     public void update(float dt){
-        //velocity.add(0,GRAVITY,0);
-        //velocity.scl(dt);
-        //position.add(0,velocity.y,0);
-        //velocity.scl(1/dt);
+        //velocity.add(0,GRAVITY);
+        velocity.scl(dt);
+
+        if(PlayState.isInleft){
+            if(position.x<GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth()){
+                position.add(velocity.x,0);
+            }else{
+                position.x=GroupProject.WIDTH-GroupProject.BRICK-region.getRegionWidth();
+            }
+        }else {
+            if(position.x>GroupProject.BRICK){
+                position.add(velocity.x,0);
+            }else{
+                position.x=GroupProject.BRICK;
+            }
+        }
+
+        velocity.scl(1/dt);
         bounds.setPosition(position.x,position.y);
     }
 
@@ -62,10 +77,12 @@ public class Theft {
     public void jump(Boolean bool){
 
         if(bool){
-            setPosition(GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth(),0);
+            //setPosition(GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth(),0);
+            velocity.set(500,0);
             region.flip(true,false);
         }else{
-            setPosition(-(GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth()),0);
+            //setPosition(-(GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth()),0);
+            velocity.set(-500,0);
             region.flip(true,false);
         }
     }

@@ -41,7 +41,7 @@ public class Obstacle {
     }
 
     public void update(float dt){
-        velocity.add(0,GRAVITY-(PlayState.count+1)/20);
+        velocity.add(0,GRAVITY-(PlayState.count+1)/100);
         velocity.scl(dt);
         position.add(0,velocity.y);
 

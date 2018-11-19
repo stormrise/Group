@@ -22,7 +22,7 @@ public class PlayState extends State {
 
     public static int count =0;   //计数器，计点击屏幕次数
     private Texture bg;
-    private Boolean isInleft;
+    public static Boolean isInleft = true;
     private BitmapFont font = new BitmapFont();
     private Array<Obstacle> obstacles;
 
