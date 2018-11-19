@@ -1,6 +1,7 @@
 package com.groupgame.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,7 +11,7 @@ import com.groupgame.game.states.PlayState;
 
 import java.util.Random;
 
-public class Obstacle {
+public class Obstacle extends Sprite {
     public static final int OBS_GAP = 120;
     public static final int OBS_H = 181;
 
@@ -19,14 +20,14 @@ public class Obstacle {
     private Rectangle bounds;
     private Vector2 position, velocity;
 
-    private int GRAVITY=-1;
+    private int GRAVITY=-5;
 
 
 
     public Obstacle(float y){
 
         obstacle=new Texture("bar_left.png");//30,181
-        obsRegion = new TextureRegion(obstacle,30,MathUtils.random(30,181));//MathUtils.random(10,181)
+        obsRegion = new TextureRegion(obstacle,30,MathUtils.random(60,181));//MathUtils.random(10,181)
 
         if(MathUtils.randomBoolean()){
             position=new Vector2(38,y);
@@ -35,13 +36,13 @@ public class Obstacle {
             obsRegion.flip(true,false);
         }
         //position=new Vector2(x, y);
-        velocity=new Vector2(0,-10);
+        velocity=new Vector2(0,-100);
         bounds= new Rectangle(position.x,position.y,obsRegion.getRegionWidth(),obsRegion.getRegionHeight());
 
     }
 
     public void update(float dt){
-        velocity.add(0,GRAVITY-(PlayState.count+1)/100);
+        velocity.add(0,-0.01f-(PlayState.count+1)/100f);
         velocity.scl(dt);
         position.add(0,velocity.y);
 
@@ -67,11 +68,7 @@ public class Obstacle {
     }
 
     public void reposition(float y){
-        if(MathUtils.randomBoolean()){
-            position.set(38,y);
-        }else{
-            position.set(480-38-30,y);
-        }
+        position.set(position.x,y);
 
         bounds.setPosition(position.x,position.y);
     }
