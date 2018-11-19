@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.groupgame.game.GroupProject;
 import com.groupgame.game.sprites.Obstacle;
 import com.groupgame.game.sprites.Theft;
@@ -25,6 +26,7 @@ public class PlayState extends State {
     public static Boolean isInleft = true;
     private BitmapFont font = new BitmapFont();
     private Array<Obstacle> obstacles;
+    float time = 5f;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -71,8 +73,11 @@ public class PlayState extends State {
             }
 
             if(obstacle.collides(theft.getBounds())){
-                gsm.set(new GameOverState(gsm));
-
+                time -= 0.3f;
+                theft.killed();
+                if(time<0) {
+                    gsm.set(new GameOverState(gsm));
+                }
             }
         }
 

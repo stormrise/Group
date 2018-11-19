@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.utils.Timer;
 import com.groupgame.game.GroupProject;
 import com.groupgame.game.states.PlayState;
 
@@ -19,6 +21,8 @@ public class Theft extends Sprite {
     private Vector2 velocity;
     private Texture theft;
     private TextureRegion region;
+    private TextureRegion deadregion;
+    private Box2D b2body;
     private Rectangle bounds;
     private Random r =new Random();
     private int Character;
@@ -30,9 +34,11 @@ public class Theft extends Sprite {
 
         if(r.nextBoolean()) {
             theft = new Texture("Idle0.png");
+            deadregion = new TextureRegion(new Texture("Dead0.png"), 77, 80);//77,80
             Character=0;
         }else{
             theft = new Texture("Idle1.png");
+            deadregion = new TextureRegion(new Texture("Dead1.png"), 77, 80);//77,80
             Character=1;
         }
         //theft = new Texture("theft.png");
@@ -105,7 +111,17 @@ public class Theft extends Sprite {
         }
     }
 
-    public void killed(){
+    public void killed() {
+
+//        switch (Character) {
+//            case 0:
+//                deadregion = new TextureRegion(new Texture("Dead0.png"), 77, 80);//77,80
+//            break;
+//            case 1:
+//                deadregion = new TextureRegion(new Texture("Dead1.png"), 77, 80);//77,80
+//            break;
+//        }
+        region=deadregion;
 
     }
 
