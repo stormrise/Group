@@ -24,14 +24,16 @@ public class PlayState extends State {
     public static int count =0;   //计数器，计点击屏幕次数
     public static int nums =0;
     private Texture bg;
-    public static Boolean isInleft = true;
+    public static Boolean isInleft;
+    public static Boolean jumpover = false;
     private BitmapFont font = new BitmapFont();
     private Array<Obstacle> obstacles;
-    float time = 1f;
+    private float time = 1f;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         theft=new Theft(38,150);
+        isInleft=true;
         bg=new Texture("background.png");
         cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);  //Sets this camera to an orthographic projection
 
@@ -40,6 +42,11 @@ public class PlayState extends State {
         for(int i=1;i<=16;i++) {
             obstacle = new Obstacle(i*(Obstacle.OBS_GAP+Obstacle.OBS_H));
             obstacles.add(obstacle);
+        }
+        if(obstacles.get(0).getPosition().x<240){
+            theft.setPosition(480-38-38-45,0);
+            theft.getRegion().flip(true,false);
+            isInleft = false;
         }
 
     }
@@ -68,6 +75,8 @@ public class PlayState extends State {
         for(int i=0;i<obstacles.size;i++){
             Obstacle obstacle = obstacles.get(i);
             obstacle.update(dt);
+
+
 
             if(obstacle.getPosition().y<-200){
                 obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
@@ -110,8 +119,9 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
+        bg.dispose();
         theft.dispose();
-
+        font.dispose();
         for(Obstacle obstacle : obstacles){
             obstacle.dispose();
         }

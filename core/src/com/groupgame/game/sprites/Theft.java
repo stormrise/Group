@@ -28,6 +28,7 @@ public class Theft extends Sprite {
     private int Character;
     private Sound jumpSound;
 
+
     public Theft(int x, int y){
         position=new Vector2(x,y);
         velocity=new Vector2(0,0);
@@ -44,7 +45,7 @@ public class Theft extends Sprite {
         //theft = new Texture("theft.png");
         region = new TextureRegion(theft,45,80);
 
-        bounds=new Rectangle(position.x,position.y+5,region.getRegionWidth(),region.getRegionHeight()-5);
+        bounds=new Rectangle(position.x,position.y,region.getRegionWidth(),region.getRegionHeight());
 
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("jumpc.wav"));
 
@@ -62,8 +63,7 @@ public class Theft extends Sprite {
             }else{
                 velocity.x=0;
                 position.x=GroupProject.WIDTH-GroupProject.BRICK-region.getRegionWidth();
-                //region.flip(true,false);
-                rotate(0);
+
             }
         }else {
             if(position.x>GroupProject.BRICK){
@@ -72,10 +72,10 @@ public class Theft extends Sprite {
             }else{
                 velocity.x=0;
                 position.x=GroupProject.BRICK;
-                //region.flip(true,false);
-                rotate(0);
+
             }
         }
+
 
         velocity.scl(1/dt);
         bounds.setPosition(position.x,position.y);
@@ -99,16 +99,17 @@ public class Theft extends Sprite {
     }
 
     public void jump(Boolean bool){
+        PlayState.jumpover=false;
         jumpSound.play(0.5f);
         if(bool){
-            //setPosition(GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth(),0);
             velocity.set(800,0);
-            region.flip(true,false);
+
         }else{
-            //setPosition(-(GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth()),0);
             velocity.set(-800,0);
-            region.flip(true,false);
+
         }
+
+        region.flip(true,false);
     }
 
     public void killed() {

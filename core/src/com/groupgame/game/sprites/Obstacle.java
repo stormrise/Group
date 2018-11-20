@@ -12,7 +12,7 @@ import com.groupgame.game.states.PlayState;
 import java.util.Random;
 
 public class Obstacle extends Sprite {
-    public static final int OBS_GAP = 120;
+    public static final int OBS_GAP = 140;
     public static final int OBS_H = 181;
 
     private Texture obstacle;
@@ -36,13 +36,13 @@ public class Obstacle extends Sprite {
             obsRegion.flip(true,false);
         }
         //position=new Vector2(x, y);
-        velocity=new Vector2(0,-100);
+        velocity=new Vector2(0,-200);
         bounds= new Rectangle(position.x,position.y,obsRegion.getRegionWidth(),obsRegion.getRegionHeight());
 
     }
 
     public void update(float dt){
-        velocity.add(0,-0.01f-(PlayState.count+1)/100f+PlayState.nums/300f);
+        velocity.add(0,-0.01f-(PlayState.count+1)/50f+PlayState.nums/200f);
         velocity.scl(dt);
         position.add(0,velocity.y);
 
