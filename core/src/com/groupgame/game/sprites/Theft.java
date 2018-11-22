@@ -22,7 +22,6 @@ public class Theft extends Sprite {
     private Texture theft;
     private TextureRegion region;
     private TextureRegion deadregion;
-    private Box2D b2body;
     private Rectangle bounds;
     private Random r =new Random();
     private int Character;
@@ -102,13 +101,13 @@ public class Theft extends Sprite {
         PlayState.jumpover=false;
         jumpSound.play(0.5f);
         if(bool){
-            velocity.set(800,0);
+            velocity.set(600+(PlayState.count+1)/50f+PlayState.nums/200f,0);
 
         }else{
-            velocity.set(-800,0);
+            velocity.set(-600-(PlayState.count+1)/50f-PlayState.nums/200f,0);
 
         }
-
+        PlayState.count++;
         region.flip(true,false);
     }
 
@@ -122,7 +121,7 @@ public class Theft extends Sprite {
 //                deadregion = new TextureRegion(new Texture("Dead1.png"), 77, 80);//77,80
 //            break;
 //        }
-        region=deadregion;
+        region.setRegion(deadregion);
         bounds.setPosition(position.x,position.y);
 
     }

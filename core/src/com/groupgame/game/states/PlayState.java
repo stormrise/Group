@@ -18,7 +18,10 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class PlayState extends State {
-
+    public enum State{
+        Running, Paused, Over
+    }
+    private State state = State.Running;
     private Theft theft;
 
     public static int count =0;   //计数器，计点击屏幕次数
@@ -28,7 +31,7 @@ public class PlayState extends State {
     public static Boolean jumpover = false;
     private BitmapFont font = new BitmapFont();
     private Array<Obstacle> obstacles;
-    private float time = 1f;
+    private Boolean isGameOver=false;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -61,7 +64,7 @@ public class PlayState extends State {
                 isInleft=false;
                 theft.jump(isInleft);
             }
-            count++;
+            //count++;
         }
 
     }
@@ -84,10 +87,16 @@ public class PlayState extends State {
             }
 
             if(obstacle.collides(theft.getBounds())){
-                time -= 0.8f;
-                theft.killed();
+                isGameOver = true;
+//                theft.killed();
+//
+//                try {
+//                    Thread.sleep(2000);
+//                    gsm.set(new GameOverState(gsm));
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 
-                    gsm.set(new GameOverState(gsm));
 
             }
         }
@@ -99,6 +108,14 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         cam.update();
         sb.setProjectionMatrix(cam.combined);//set orthographic projection
+        switch(state){
+            case Running:
+                //update();
+                break;
+            case Paused:
+                //don't update
+                break;
+        }
 
         sb.begin();
         sb.draw(bg,0,0,GroupProject.WIDTH,GroupProject.HEIGHT);
@@ -113,7 +130,17 @@ public class PlayState extends State {
 
         sb.end();
 
+        if(isGameOver){
+            theft.killed();
 
+            try {
+                Thread.sleep(2000);
+                gsm.set(new GameOverState(gsm));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
@@ -127,5 +154,16 @@ public class PlayState extends State {
         }
 
 
+    }
+
+
+    public void pause()
+    {
+        this.state = State.Paused;
+    }
+
+    public void resume()
+    {
+        this.state = State.Running;
     }
 }
