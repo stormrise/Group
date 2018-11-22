@@ -21,7 +21,6 @@ public class Theft extends Sprite {
     private Vector2 velocity;
     private Texture theft;
     private TextureRegion region;
-    private TextureRegion deadregion;
     private Rectangle bounds;
     private Random r =new Random();
     private int Character;
@@ -34,11 +33,9 @@ public class Theft extends Sprite {
 
         if(r.nextBoolean()) {
             theft = new Texture("Idle0.png");
-            deadregion = new TextureRegion(new Texture("Dead0.png"), 77, 80);//77,80
             Character=0;
         }else{
             theft = new Texture("Idle1.png");
-            deadregion = new TextureRegion(new Texture("Dead1.png"), 77, 80);//77,80
             Character=1;
         }
         //theft = new Texture("theft.png");
@@ -57,7 +54,7 @@ public class Theft extends Sprite {
         if(PlayState.isInleft){
             if(position.x<GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth()){
                 position.add(velocity.x,0);
-                rotate(3);
+
 
             }else{
                 velocity.x=0;
@@ -67,7 +64,7 @@ public class Theft extends Sprite {
         }else {
             if(position.x>GroupProject.BRICK){
                 position.add(velocity.x,0);
-                rotate(3);
+
             }else{
                 velocity.x=0;
                 position.x=GroupProject.BRICK;
@@ -99,29 +96,33 @@ public class Theft extends Sprite {
 
     public void jump(Boolean bool){
         PlayState.jumpover=false;
+
         jumpSound.play(0.5f);
         if(bool){
-            velocity.set(600+(PlayState.count+1)/50f+PlayState.nums/200f,0);
+            velocity.set(600+(PlayState.count+1)/100f+PlayState.nums/500f,0);
 
         }else{
-            velocity.set(-600-(PlayState.count+1)/50f-PlayState.nums/200f,0);
+            velocity.set(-600-(PlayState.count+1)/100f-PlayState.nums/500f,0);
 
         }
         PlayState.count++;
+        rotate(0);
         region.flip(true,false);
     }
 
     public void killed() {
 
-//        switch (Character) {
-//            case 0:
-//                deadregion = new TextureRegion(new Texture("Dead0.png"), 77, 80);//77,80
-//            break;
-//            case 1:
-//                deadregion = new TextureRegion(new Texture("Dead1.png"), 77, 80);//77,80
-//            break;
-//        }
-        region.setRegion(deadregion);
+        switch (Character) {
+            case 0:
+                theft=new Texture("Dead0.png");//77,80
+            break;
+            case 1:
+                theft=new Texture("Dead1.png");//77,80
+            break;
+        }
+
+        region.setRegion(theft);
+        rotate(3);
         bounds.setPosition(position.x,position.y);
 
     }

@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -25,13 +29,12 @@ public class PlayState extends State {
     private Theft theft;
 
     public static int count =0;   //计数器，计点击屏幕次数
-    public static int nums =0;
+    public static int nums =0;//掉落了多少个锯齿
     private Texture bg;
     public static Boolean isInleft;
     public static Boolean jumpover = false;
     private BitmapFont font = new BitmapFont();
     private Array<Obstacle> obstacles;
-    private Boolean isGameOver=false;
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
@@ -59,48 +62,55 @@ public class PlayState extends State {
         if(Gdx.input.justTouched()){
             if(theft.getPosition().x==GroupProject.BRICK){   //如果余数是0则向右移动；count%2==0
                 isInleft=true;
-                theft.jump(isInleft);
+                theft.jump(true);
             }else if(theft.getPosition().x==GroupProject.WIDTH-GroupProject.BRICK-theft.getRegion().getRegionWidth()){   //否则向左移动；
                 isInleft=false;
-                theft.jump(isInleft);
+                theft.jump(false);
             }
             //count++;
         }
+
 
     }
 
     @Override
     public void update(float dt) {
         handleInput();
-        theft.update(dt);
+        switch(state){
+            case Running:
+                //update();
 
+                theft.update(dt);
 
-        for(int i=0;i<obstacles.size;i++){
-            Obstacle obstacle = obstacles.get(i);
-            obstacle.update(dt);
+                for(int i=0;i<obstacles.size;i++){
+                    Obstacle obstacle = obstacles.get(i);
+                    obstacle.update(dt);
 
+                    if(obstacle.getPosition().y<-200){
+                        obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
+                        nums++;
+                    }
 
+                    if(obstacle.collides(theft.getBounds())){
+                        //isGameOver = true;
+                        theft.killed();
 
-            if(obstacle.getPosition().y<-200){
-                obstacle.reposition(obstacle.getPosition().y+16*(Obstacle.OBS_GAP+Obstacle.OBS_H));
-                nums++;
-            }
+                        try {
+                            Thread.sleep(2000);
+                            gsm.set(new GameOverState(gsm));
+                            dispose();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
-            if(obstacle.collides(theft.getBounds())){
-                isGameOver = true;
-//                theft.killed();
-//
-//                try {
-//                    Thread.sleep(2000);
-//                    gsm.set(new GameOverState(gsm));
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                    }
+                }
 
-
-            }
+                break;
+            case Paused:
+                //don't update
+                break;
         }
-
 
     }
 
@@ -108,14 +118,7 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         cam.update();
         sb.setProjectionMatrix(cam.combined);//set orthographic projection
-        switch(state){
-            case Running:
-                //update();
-                break;
-            case Paused:
-                //don't update
-                break;
-        }
+
 
         sb.begin();
         sb.draw(bg,0,0,GroupProject.WIDTH,GroupProject.HEIGHT);
@@ -129,18 +132,6 @@ public class PlayState extends State {
         }
 
         sb.end();
-
-        if(isGameOver){
-            theft.killed();
-
-            try {
-                Thread.sleep(2000);
-                gsm.set(new GameOverState(gsm));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
 
     }
 
