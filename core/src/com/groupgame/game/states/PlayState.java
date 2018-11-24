@@ -25,7 +25,7 @@ public class PlayState extends State {
     public enum State{
         Running, Paused, Over
     }
-    private State state;
+    public static State state;
     private Theft theft;
 
     public static int count =0;   //计数器，计点击屏幕次数
@@ -98,13 +98,20 @@ public class PlayState extends State {
                         //isGameOver = true;
                         theft.killed();
 
-                        try {
-                            Thread.sleep(2000);
+                        float t=Gdx.graphics.getDeltaTime();
+                        do{
+                            t=t+Gdx.graphics.getDeltaTime();
+                        }while(t<30000);
+                        if(t>30000)
                             gsm.set(new GameOverState(gsm));
-                            dispose();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        dispose();
+//                        try {
+//                            Thread.sleep(2000);
+//                            gsm.set(new GameOverState(gsm));
+//                            dispose();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
 
                     }
                 }
@@ -152,13 +159,13 @@ public class PlayState extends State {
     }
 
 
-    public void pause()
+    public static void pause()
     {
-        this.state = State.Paused;
+        state = State.Paused;
     }
 
-    public void resume()
+    public static void resume()
     {
-        this.state = State.Running;
+        state = State.Running;
     }
 }

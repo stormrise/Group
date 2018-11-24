@@ -6,17 +6,22 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.groupgame.game.states.GameStateManager;
 import com.groupgame.game.states.MenuState;
+import com.groupgame.game.states.PlayState;
 
 public class GroupProject extends ApplicationAdapter {
 	public static final int WIDTH=480;
@@ -31,6 +36,7 @@ public class GroupProject extends ApplicationAdapter {
 	private Music music;
 
 	private Stage stage;
+	private Label outputLabel;
 
 	@Override
 	public void create () {
@@ -39,23 +45,35 @@ public class GroupProject extends ApplicationAdapter {
 
 		int row_height = Gdx.graphics.getWidth() / 12;
 		int col_width = Gdx.graphics.getWidth() / 12;
+		Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
+		//ImageTextButton
+		ImageButton imageButton = new ImageButton(mySkin);
+		imageButton.setSize(96,96);
+		imageButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause.png"))));
+		imageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("start.png"))));
+		imageButton.setPosition(col_width,Gdx.graphics.getHeight()-row_height*2);
+		imageButton.addListener(new InputListener(){
 
-//		Button button2=new TextButton("PAUSE",);
-//		button2.setSize(col_width*4,row_height);
-//		button2.setPosition(col_width*7,Gdx.graphics.getHeight()-row_height*3);
-//		button2.addListener(new InputListener(){
-//			@Override
-//			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//
-//			}
-//			@Override
-//			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//
-//				return true;
-//			}
-//		});
-//		stage.addActor(button2);
+			@Override
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				PlayState.pause();
+				outputLabel.setText("Press up");
+			}
+			@Override
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				PlayState.resume();
+				outputLabel.setText("Pressed down");
+				return true;
+			}
+		});
+		stage.addActor(imageButton);
+
+		outputLabel = new Label("Press a Button",mySkin,"black");
+		outputLabel.setSize(Gdx.graphics.getWidth(),row_height);
+		outputLabel.setPosition(0,row_height);
+		outputLabel.setAlignment(Align.center);
+		stage.addActor(outputLabel);
 
 
 		batch = new SpriteBatch();
@@ -79,6 +97,16 @@ public class GroupProject extends ApplicationAdapter {
 		stage.draw();
 
 
+	}
+
+	@Override
+	public void pause() {
+		super.pause();
+	}
+
+	@Override
+	public void resume() {
+		super.resume();
 	}
 
 	@Override
