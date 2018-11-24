@@ -25,7 +25,7 @@ public class PlayState extends State {
     public enum State{
         Running, Paused, Over
     }
-    private State state = State.Running;
+    private State state;
     private Theft theft;
 
     public static int count =0;   //计数器，计点击屏幕次数
@@ -38,11 +38,13 @@ public class PlayState extends State {
 
     protected PlayState(GameStateManager gsm) {
         super(gsm);
-        theft=new Theft(38,150);
+        state = State.Running;
+
+        theft=new Theft(GroupProject.BRICK,150);
         isInleft=true;
         bg=new Texture("background.png");
         cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);  //Sets this camera to an orthographic projection
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);// 防止字体模糊
 
         obstacles = new Array<Obstacle>();
         Obstacle obstacle;
@@ -63,10 +65,10 @@ public class PlayState extends State {
         if(Gdx.input.justTouched()){
             if(theft.getPosition().x==GroupProject.BRICK){   //如果余数是0则向右移动；count%2==0
                 isInleft=true;
-                theft.jump(true);
+                theft.jump(isInleft);
             }else if(theft.getPosition().x==GroupProject.WIDTH-GroupProject.BRICK-theft.getRegion().getRegionWidth()){   //否则向左移动；
                 isInleft=false;
-                theft.jump(false);
+                theft.jump(isInleft);
             }
             //count++;
         }

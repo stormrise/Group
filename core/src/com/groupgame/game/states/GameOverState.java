@@ -13,14 +13,14 @@ public class GameOverState extends State{
     private Texture gameover;
 
 
-    BitmapFont font = new BitmapFont();
+    private BitmapFont font = new BitmapFont();
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, GroupProject.WIDTH, GroupProject.HEIGHT);
         background = new Texture("background.png");
         gameover= new Texture("gameover.png");
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);// 防止字体模糊
 
 
     }
@@ -56,5 +56,6 @@ public class GameOverState extends State{
     public void dispose() {
         background.dispose();
         gameover.dispose();
+        font.dispose();
     }
 }
