@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,7 +37,7 @@ public class GroupProject extends ApplicationAdapter {
 	private Music music;
 
 	private Stage stage;
-	private Label outputLabel;
+	
 
 	@Override
 	public void create () {
@@ -47,33 +48,37 @@ public class GroupProject extends ApplicationAdapter {
 		int col_width = Gdx.graphics.getWidth() / 12;
 		Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-		//ImageTextButton
-		ImageButton imageButton = new ImageButton(mySkin);
-		imageButton.setSize(96,96);
-		imageButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause.png"))));
-		imageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("start.png"))));
-		imageButton.setPosition(col_width,Gdx.graphics.getHeight()-row_height*2);
-		imageButton.addListener(new InputListener(){
-
+		//ImageButton
+		Button button1 = new TextButton("Pause",mySkin,"small");
+		button1.setSize(90,40);
+		//button1.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause.png"))));
+		//imageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("start.png"))));
+		button1.setPosition(WIDTH/2-90,Gdx.graphics.getHeight()-row_height);
+		button1.addListener(new InputListener(){
 			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+			public boolean handle(Event e) {
 				PlayState.pause();
-				outputLabel.setText("Press up");
+				return super.handle(e);
 			}
-			@Override
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				PlayState.resume();
-				outputLabel.setText("Pressed down");
-				return true;
-			}
-		});
-		stage.addActor(imageButton);
 
-		outputLabel = new Label("Press a Button",mySkin,"black");
-		outputLabel.setSize(Gdx.graphics.getWidth(),row_height);
-		outputLabel.setPosition(0,row_height);
-		outputLabel.setAlignment(Align.center);
-		stage.addActor(outputLabel);
+		});
+		stage.addActor(button1);
+
+		// Text Button
+		Button button2 = new TextButton("Resume",mySkin,"small");
+		button2.setSize(90,40);
+		button2.setPosition(WIDTH/2,Gdx.graphics.getHeight()-row_height);
+		button2.addListener(new InputListener(){
+			@Override
+			public boolean handle(Event e) {
+				PlayState.resume();
+				return super.handle(e);
+			}
+
+		});
+		stage.addActor(button2);
+
+
 
 
 		batch = new SpriteBatch();

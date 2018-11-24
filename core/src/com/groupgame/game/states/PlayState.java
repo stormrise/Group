@@ -78,11 +78,11 @@ public class PlayState extends State {
 
     @Override
     public void update(float dt) {
-        handleInput();
+
         switch(state){
             case Running:
                 //update();
-
+                handleInput();
                 theft.update(dt);
 
                 for(int i=0;i<obstacles.size;i++){
