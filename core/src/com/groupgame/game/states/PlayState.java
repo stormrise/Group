@@ -25,7 +25,7 @@ public class PlayState extends State {
     public enum State{
         Running, Paused
     }
-    public static State state;
+    private static State state;
     private Theft theft;
 
     public static int count =0;   //计数器，计点击屏幕次数

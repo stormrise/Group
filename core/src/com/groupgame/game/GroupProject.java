@@ -34,7 +34,7 @@ public class GroupProject extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 
-	private Music music;
+	private static Music music;
 
 	private Stage stage;
 	public static Label outputLabel;
@@ -82,17 +82,18 @@ public class GroupProject extends ApplicationAdapter {
 
 		outputLabel = new Label("",mySkin,"black");
 		outputLabel.setSize(Gdx.graphics.getWidth(),row_height);
-		outputLabel.setPosition(0,row_height);
+		outputLabel.setPosition(0,row_height*4);
+		outputLabel.setFontScale(2.0f);
 		outputLabel.setAlignment(Align.center);
 		stage.addActor(outputLabel);
 
 
 		batch = new SpriteBatch();
 		gsm =new GameStateManager();
-//		  music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
-//        music.setLooping(true);
-//        music.setVolume(0.1f);
-//        music.play();
+		music = Gdx.audio.newMusic(Gdx.files.internal("FateAndDestiny.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.15f);
+        music.play();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 
 		gsm.push(new MenuState(gsm));
@@ -111,11 +112,13 @@ public class GroupProject extends ApplicationAdapter {
 
 	@Override
 	public void pause() {
+		music.pause();
 		super.pause();
 	}
 
 	@Override
 	public void resume() {
+		music.play();
 		super.resume();
 	}
 
@@ -123,6 +126,7 @@ public class GroupProject extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		stage.dispose();
+		music.dispose();
 
 	}
 
