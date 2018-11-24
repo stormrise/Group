@@ -42,6 +42,7 @@ public class PlayState extends State {
         isInleft=true;
         bg=new Texture("background.png");
         cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);  //Sets this camera to an orthographic projection
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         obstacles = new Array<Obstacle>();
         Obstacle obstacle;
@@ -126,6 +127,7 @@ public class PlayState extends State {
 
         font.draw(sb,String.valueOf(count),240,700);
         font.setColor(Color.BLACK);
+        font.getData().setScale(2.0f);
 
         for(Obstacle obstacle :obstacles){
             sb.draw(obstacle.getObsRegion(),obstacle.getPosition().x,obstacle.getPosition().y);

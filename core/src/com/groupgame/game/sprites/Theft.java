@@ -97,7 +97,7 @@ public class Theft extends Sprite {
     public void jump(Boolean bool){
         PlayState.jumpover=false;
 
-        jumpSound.play(0.5f);
+        jumpSound.play(0.8f);
         if(bool){
             velocity.set(600+(PlayState.count+1)/100f+PlayState.nums/500f,0);
 

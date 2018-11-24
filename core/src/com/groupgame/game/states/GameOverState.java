@@ -20,7 +20,7 @@ public class GameOverState extends State{
         cam.setToOrtho(false, GroupProject.WIDTH, GroupProject.HEIGHT);
         background = new Texture("background.png");
         gameover= new Texture("gameover.png");
-
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 
     }
@@ -46,9 +46,9 @@ public class GameOverState extends State{
         sb.draw(background, 0,0);
         sb.draw(gameover, cam.position.x - gameover.getWidth() / 2, cam.position.y);
         font.draw(sb,"Touch Anywhere To Restart",cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight());
-        font.draw(sb,"Score:"+String.valueOf(PlayState.count),cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight()-50);
+        font.draw(sb,"Score:"+String.valueOf(PlayState.count<0 ? 0 : PlayState.count),cam.position.x- gameover.getWidth() / 2, cam.position.y-gameover.getHeight()-50);
         font.setColor(Color.BLACK);
-
+        font.getData().setScale(1.5f);
         sb.end();
     }
 

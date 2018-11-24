@@ -19,6 +19,8 @@ public class MenuState extends State {
         background=new Texture("background.png");  //设置背景图片
         butt=new Texture("butt.png");  //设置开始按钮
         cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
     }
 
     @Override
@@ -47,6 +49,7 @@ public class MenuState extends State {
         sb.draw(butt,(GroupProject.WIDTH/2)-(butt.getWidth()/2),GroupProject.HEIGHT/2);
         font.draw(sb,"!!!Welcome to Nijia Jump!!!",(GroupProject.WIDTH/2)-(butt.getWidth()/2),GroupProject.HEIGHT/2+200);
         font.setColor(Color.BLACK);
+        font.getData().setScale(2.0f);
 
         sb.end();
 
