@@ -37,7 +37,7 @@ public class GroupProject extends ApplicationAdapter {
 	private Music music;
 
 	private Stage stage;
-	
+	public static Label outputLabel;
 
 	@Override
 	public void create () {
@@ -50,14 +50,15 @@ public class GroupProject extends ApplicationAdapter {
 
 		//ImageButton
 		Button button1 = new TextButton("Pause",mySkin,"small");
-		button1.setSize(90,40);
+		button1.setSize(100,50);
 		//button1.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause.png"))));
 		//imageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("start.png"))));
-		button1.setPosition(WIDTH/2-90,Gdx.graphics.getHeight()-row_height);
+		button1.setPosition(Gdx.graphics.getWidth()/2-50,Gdx.graphics.getHeight()-row_height);
 		button1.addListener(new InputListener(){
 			@Override
 			public boolean handle(Event e) {
 				PlayState.pause();
+				outputLabel.setText("Press Screen to Resume");
 				return super.handle(e);
 			}
 
@@ -65,25 +66,30 @@ public class GroupProject extends ApplicationAdapter {
 		stage.addActor(button1);
 
 		// Text Button
-		Button button2 = new TextButton("Resume",mySkin,"small");
-		button2.setSize(90,40);
-		button2.setPosition(WIDTH/2,Gdx.graphics.getHeight()-row_height);
-		button2.addListener(new InputListener(){
-			@Override
-			public boolean handle(Event e) {
-				PlayState.resume();
-				return super.handle(e);
-			}
+//		Button button2 = new TextButton("Resume",mySkin,"small");
+//		button2.setSize(90,40);
+//		button2.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-row_height);
+//		button2.addListener(new InputListener(){
+//			@Override
+//			public boolean handle(Event e) {
+//				PlayState.resume();
+//				outputLabel.setText("");
+//				return super.handle(e);
+//			}
+//
+//		});
+//		stage.addActor(button2);
 
-		});
-		stage.addActor(button2);
-
-
+		outputLabel = new Label("",mySkin,"black");
+		outputLabel.setSize(Gdx.graphics.getWidth(),row_height);
+		outputLabel.setPosition(0,row_height);
+		outputLabel.setAlignment(Align.center);
+		stage.addActor(outputLabel);
 
 
 		batch = new SpriteBatch();
 		gsm =new GameStateManager();
-//		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+//		  music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 //        music.setLooping(true);
 //        music.setVolume(0.1f);
 //        music.play();
@@ -100,7 +106,6 @@ public class GroupProject extends ApplicationAdapter {
 		gsm.render(batch);
 		stage.act();
 		stage.draw();
-
 
 	}
 
@@ -120,4 +125,6 @@ public class GroupProject extends ApplicationAdapter {
 		stage.dispose();
 
 	}
+
+
 }

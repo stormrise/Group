@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class PlayState extends State {
     public enum State{
-        Running, Paused, Over
+        Running, Paused
     }
     public static State state;
     private Theft theft;
@@ -62,27 +62,35 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-        if(Gdx.input.justTouched()){
-            if(theft.getPosition().x==GroupProject.BRICK){   //如果余数是0则向右移动；count%2==0
-                isInleft=true;
-                theft.jump(isInleft);
-            }else if(theft.getPosition().x==GroupProject.WIDTH-GroupProject.BRICK-theft.getRegion().getRegionWidth()){   //否则向左移动；
-                isInleft=false;
-                theft.jump(isInleft);
-            }
-            //count++;
+        switch (state) {
+            case Running:
+                if (Gdx.input.justTouched()) {
+                    if (theft.getPosition().x == GroupProject.BRICK) {   //如果余数是0则向右移动；count%2==0
+                        isInleft = true;
+                        theft.jump(isInleft);
+                    } else if (theft.getPosition().x == GroupProject.WIDTH - GroupProject.BRICK - theft.getRegion().getRegionWidth()) {   //否则向左移动；
+                        isInleft = false;
+                        theft.jump(isInleft);
+                    }
+                    //count++;
+                }
+                break;
+            case Paused:
+                if (Gdx.input.justTouched()){
+                    resume();
+                    GroupProject.outputLabel.setText("");
+                }
+
         }
-
-
     }
 
     @Override
     public void update(float dt) {
-
+        handleInput();
         switch(state){
             case Running:
                 //update();
-                handleInput();
+
                 theft.update(dt);
 
                 for(int i=0;i<obstacles.size;i++){
