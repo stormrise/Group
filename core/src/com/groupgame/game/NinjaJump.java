@@ -25,6 +25,8 @@ import com.groupgame.game.states.MenuState;
 import com.groupgame.game.states.PlayState;
 
 public class NinjaJump extends ApplicationAdapter {
+	
+	//define screen
 	public static final int WIDTH=480;
 	public static final int HEIGHT=800;
 	public static final int BRICK=38;
@@ -32,7 +34,8 @@ public class NinjaJump extends ApplicationAdapter {
 	public static final String TITLE="NinjaJump";
 	private  GameStateManager gsm;
 
-	private SpriteBatch batch;
+	//only need one spritebatch, make public
+	public SpriteBatch batch;
 
 	private static Music music;
 
@@ -90,6 +93,8 @@ public class NinjaJump extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 		gsm =new GameStateManager();
+		
+		//background music
 		music = Gdx.audio.newMusic(Gdx.files.internal("FateAndDestiny.mp3"));
         music.setLooping(true);
         music.setVolume(0.15f);

@@ -28,6 +28,7 @@ public class Ninja extends Sprite {
         position=new Vector2(x,y);
         velocity=new Vector2(0,0);
 
+        //随机选取角色
         if(r.nextBoolean()) {
             theft = new Texture("Idle0.png");
             Character=0;
@@ -36,7 +37,7 @@ public class Ninja extends Sprite {
             Character=1;
         }
         //theft = new Texture("theft.png");
-        region = new TextureRegion(theft,45,80);
+        region = new TextureRegion(theft,45,80);//45，80是图片的像素值
 
         bounds=new Rectangle(position.x,position.y,region.getRegionWidth(),region.getRegionHeight());
 
@@ -48,6 +49,7 @@ public class Ninja extends Sprite {
         //velocity.add(0,GRAVITY);
         velocity.scl(dt);
 
+        //判断不同方向时，跳的方向不同，跳到了之后停止在终点
         if(PlayState.isInleft){
             if(position.x<NinjaJump.WIDTH-NinjaJump.BRICK*2-region.getRegionWidth()){
                 position.add(velocity.x,0);
@@ -91,12 +93,13 @@ public class Ninja extends Sprite {
         position.add(x,y);
     }
 
+    //跳跃方法
     public void jump(Boolean bool){
         PlayState.jumpover=false;
 
         jumpSound.play(0.8f);
         if(bool){
-            velocity.set(600+(PlayState.count+1)/100f+PlayState.nums/500f,0);
+            velocity.set(600+(PlayState.count+1)/100f+PlayState.nums/500f,0);//随游戏变快，和obstacle保持一致
 
         }else{
             velocity.set(-600-(PlayState.count+1)/100f-PlayState.nums/500f,0);
@@ -104,11 +107,11 @@ public class Ninja extends Sprite {
         }
         PlayState.count++;
         rotate(0);
-        region.flip(true,false);
+        region.flip(true,false);//跳跃后翻转图片
     }
 
     public void killed() {
-
+        //死亡时展示死亡的图片
         switch (Character) {
             case 0:
                 theft=new Texture("Dead0.png");//77,80

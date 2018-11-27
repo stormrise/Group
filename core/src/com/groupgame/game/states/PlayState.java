@@ -11,6 +11,7 @@ import com.groupgame.game.sprites.Obstacle;
 import com.groupgame.game.sprites.Ninja;
 
 public class PlayState extends State {
+    //枚举游戏状态是否在运行
     public enum State{
         Running, Paused
     }
@@ -37,6 +38,7 @@ public class PlayState extends State {
 
         obstacles = new Array<Obstacle>();
         Obstacle obstacle;
+        //16个能铺满两个屏幕，可以循环使用
         for(int i=1;i<=16;i++) {
             obstacle = new Obstacle(i*(Obstacle.OBS_GAP+Obstacle.OBS_H));
             obstacles.add(obstacle);
@@ -51,10 +53,13 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
+        //不同状态下的手指点击效果不同
         switch (state) {
             case Running:
+                //游戏状态下点击人物跳动
                 if (Gdx.input.justTouched()) {
-                    if (ninja.getPosition().x == NinjaJump.BRICK) {   //如果余数是0则向右移动；count%2==0
+                    //调用Ninja.class方法
+                    if (ninja.getPosition().x == NinjaJump.BRICK) {   //如果余数是0则向右移动；count%2==0//以前的方法
                         isInleft = true;
                         ninja.jump(isInleft);
                     } else if (ninja.getPosition().x == NinjaJump.WIDTH - NinjaJump.BRICK - ninja.getRegion().getRegionWidth()) {   //否则向左移动；
@@ -65,6 +70,7 @@ public class PlayState extends State {
                 }
                 break;
             case Paused:
+                //暂停下 点击恢复
                 if (Gdx.input.justTouched()){
                     resume();
                     NinjaJump.outputLabel.setText("");
@@ -135,6 +141,7 @@ public class PlayState extends State {
         font.setColor(Color.BLACK);
         font.getData().setScale(2.0f);
 
+        //循环利用障碍物
         for(Obstacle obstacle :obstacles){
             sb.draw(obstacle.getObsRegion(),obstacle.getPosition().x,obstacle.getPosition().y);
         }

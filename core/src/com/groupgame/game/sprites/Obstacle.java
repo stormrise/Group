@@ -12,8 +12,8 @@ import com.groupgame.game.states.PlayState;
 import java.util.Random;
 
 public class Obstacle extends Sprite {
-    public static final int OBS_GAP = 140;
-    public static final int OBS_H = 181;
+    public static final int OBS_GAP = 140;//每个间距
+    public static final int OBS_H = 181;//障碍物总高
 
     private Texture obstacle;
     private TextureRegion obsRegion;
@@ -27,20 +27,22 @@ public class Obstacle extends Sprite {
 
     public Obstacle(float y){
 
+        //随机障碍物
         if(r.nextBoolean()) {
             obstacle = new Texture("bar_left.png");
         }else{
             obstacle = new Texture("saw.png");
         }
 
-        //obstacle=new Texture("bar_left.png");//30,181
-        obsRegion = new TextureRegion(obstacle,30,60*MathUtils.random(1,3));//MathUtils.random(10,181)
+        //obstacle=new Texture("bar_left.png");//30,181是图片的像素值
+        obsRegion = new TextureRegion(obstacle,30,60*MathUtils.random(1,3));//MathUtils.random(10,181)//随机成3等份长度，
 
+        //随机位置
         if(MathUtils.randomBoolean()){
             position=new Vector2(38,y);
         }else{
             position=new Vector2(480-38-30,y);
-            obsRegion.flip(true,false);
+            obsRegion.flip(true,false);//右边翻转图像
         }
         //position=new Vector2(x, y);
         velocity=new Vector2(0,-200);
@@ -49,6 +51,7 @@ public class Obstacle extends Sprite {
     }
 
     public void update(float dt){
+        //速度随游戏越来越快
         velocity.add(0,-0.01f-(PlayState.count+1)/100f-PlayState.nums/500f);
         velocity.scl(dt);
         position.add(0,velocity.y);
@@ -74,12 +77,14 @@ public class Obstacle extends Sprite {
         return bounds;
     }
 
+    //重新放置，循环利用
     public void reposition(float y){
         position.set(position.x,y);
 
         bounds.setPosition(position.x,position.y);
     }
 
+    //碰撞方法
     public boolean collides(Rectangle player){
         return player.overlaps(bounds);
     }
