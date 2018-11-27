@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.groupgame.game.NinjaJump;
 import com.groupgame.game.sprites.Obstacle;
@@ -67,6 +68,7 @@ public class PlayState extends State {
                         ninja.jump(isInleft);
                     }
                     //count++;
+
                 }
                 break;
             case Paused:
@@ -97,7 +99,11 @@ public class PlayState extends State {
                         nums++;
                     }
 
-                    if(obstacle.collides(ninja.getBounds())){
+                    //碰撞
+                    if(obstacle.collides(ninja.getBounds()) && !Obstacle.fake){
+                        //如果已经跳过去了不扣分
+                        if(ninja.getPosition().x==NinjaJump.WIDTH-NinjaJump.BRICK-ninja.getRegion().getRegionWidth() || ninja.getPosition().x==NinjaJump.BRICK)
+                            count++;
                         //isGameOver = true;
                         ninja.killed();
 
@@ -138,6 +144,14 @@ public class PlayState extends State {
         sb.draw(ninja.getRegion(), ninja.getPosition().x, ninja.getPosition().y);
 
         font.draw(sb,String.valueOf(count),240,700);
+        //每隔10分不死模式
+        if(count%10==0 && count!=0){
+            Obstacle.fake=true;
+            font.draw(sb,"UNDEAD",200,300);
+        }else {
+            Obstacle.fake=false;
+            font.draw(sb,"",200,300);
+        }
         font.setColor(Color.BLACK);
         font.getData().setScale(2.0f);
 

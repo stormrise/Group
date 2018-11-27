@@ -99,10 +99,10 @@ public class Ninja extends Sprite {
 
         jumpSound.play(0.8f);
         if(bool){
-            velocity.set(600+(PlayState.count+1)/100f+PlayState.nums/500f,0);//随游戏变快，和obstacle保持一致
+            velocity.set(800+(PlayState.count+1)/100f+PlayState.nums/500f,0);//随游戏变快，和obstacle保持一致
 
         }else{
-            velocity.set(-600-(PlayState.count+1)/100f-PlayState.nums/500f,0);
+            velocity.set(-800-(PlayState.count+1)/100f-PlayState.nums/500f,0);
 
         }
         PlayState.count++;

@@ -14,6 +14,7 @@ import java.util.Random;
 public class Obstacle extends Sprite {
     public static final int OBS_GAP = 140;//每个间距
     public static final int OBS_H = 181;//障碍物总高
+    public static boolean fake;
 
     private Texture obstacle;
     private TextureRegion obsRegion;
@@ -45,15 +46,18 @@ public class Obstacle extends Sprite {
             obsRegion.flip(true,false);//右边翻转图像
         }
         //position=new Vector2(x, y);
-        velocity=new Vector2(0,-200);
+        velocity=new Vector2(0,-250);
         bounds= new Rectangle(position.x,position.y,obsRegion.getRegionWidth(),obsRegion.getRegionHeight());
 
+        fake=false;
     }
 
     public void update(float dt){
         //速度随游戏越来越快
-        velocity.add(0,-0.01f-(PlayState.count+1)/100f-PlayState.nums/500f);
+        velocity.add(0,-0.001f-(PlayState.count+1)/300f-PlayState.nums/1000f);
         velocity.scl(dt);
+        if(velocity.y<-600)
+            velocity.y=-600;
         position.add(0,velocity.y);
 
         velocity.scl(1/dt);

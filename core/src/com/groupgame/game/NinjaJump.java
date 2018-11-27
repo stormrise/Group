@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.groupgame.game.sprites.Obstacle;
 import com.groupgame.game.states.GameStateManager;
 import com.groupgame.game.states.MenuState;
 import com.groupgame.game.states.PlayState;
@@ -51,7 +52,7 @@ public class NinjaJump extends ApplicationAdapter {
 		int col_width = Gdx.graphics.getWidth() / 12;
 		Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-		//ImageButton
+		//TextButton
 		Button button1 = new TextButton("Pause",mySkin,"small");
 		button1.setSize(100,50);
 		//button1.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause.png"))));
@@ -82,6 +83,31 @@ public class NinjaJump extends ApplicationAdapter {
 //
 //		});
 //		stage.addActor(button2);
+
+//		//TextButton
+//		Button button3 = new TextButton("Boost",mySkin,"small");
+//		button3.setSize(100,50);
+//		//button1.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause.png"))));
+//		//imageButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("start.png"))));
+//		button3.setPosition(Gdx.graphics.getWidth()/2-50,row_height);
+//		button3.addListener(new InputListener(){
+//			@Override
+//			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//				super.touchUp(event, x, y, pointer, button);
+//				Obstacle.fake=false;
+//			}
+//
+//			@Override
+//			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//				if(PlayState.count>10){
+//					Obstacle.fake=true;
+//					PlayState.count-=5;
+//				}
+//				return super.touchDown(event, x, y, pointer, button);
+//
+//			}
+//		});
+//		stage.addActor(button3);
 
 		outputLabel = new Label("",mySkin,"black");
 		outputLabel.setSize(Gdx.graphics.getWidth(),row_height);
