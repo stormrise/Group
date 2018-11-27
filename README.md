@@ -42,13 +42,24 @@ Also, we can choose to run in desktop use java runtime environment.
 
 All game code in here.
 
+`NinjaJump.java` is the main class, defines some constants, also contains backgroud, music, and include all others.
+
+`sprites` folder contains `Ninja.java` and `Obstacle.java` which defines two sprites.
+
+`states` folder: `PlayState.java` contains game logic and play screen, `MenuState.java` is a menu screen, `GameOverState.java` shows the score you got after ninja dead. `GameStateManager.java` controls different state in and out,`State.java` is a abstact class define the methods used in the previous class.
+
+>All assets are locate in Android assets floder, which will mentioned later.
 
 ### Android 
 
+`AndroidLauncher.java` is the one start android application, we can define some android unique configuration here, `AndroidManifest.xml` is the same as other android project.
 
+!! important !!
+`assets` folder is contains all assets like sprites/music/pictures 
 
 ### Desktop 
 
+`DesktopLauncher.java`is the one start desktop  application, we can define some desktop unique configuration here.
 
 
 
@@ -56,8 +67,7 @@ All game code in here.
 
 
 
-
-#Contributors 
+# Contributors 
 
 * Li Lingxiao
 * Wang 
