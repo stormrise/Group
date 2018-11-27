@@ -5,28 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.Timer;
-import com.groupgame.game.GroupProject;
+import com.groupgame.game.NinjaJump;
 import com.groupgame.game.sprites.Obstacle;
-import com.groupgame.game.sprites.Theft;
-
-import java.util.Iterator;
-import java.util.Random;
+import com.groupgame.game.sprites.Ninja;
 
 public class PlayState extends State {
     public enum State{
         Running, Paused
     }
     private static State state;
-    private Theft theft;
+    private Ninja ninja;
 
     public static int count =0;   //计数器，计点击屏幕次数
     public static int nums =0;//掉落了多少个锯齿
@@ -40,10 +29,10 @@ public class PlayState extends State {
         super(gsm);
         state = State.Running;
 
-        theft=new Theft(GroupProject.BRICK,150);
+        ninja =new Ninja(NinjaJump.BRICK,150);
         isInleft=true;
         bg=new Texture("background.png");
-        cam.setToOrtho(false,GroupProject.WIDTH,GroupProject.HEIGHT);  //Sets this camera to an orthographic projection
+        cam.setToOrtho(false,NinjaJump.WIDTH,NinjaJump.HEIGHT);  //Sets this camera to an orthographic projection
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);// 防止字体模糊
 
         obstacles = new Array<Obstacle>();
@@ -53,8 +42,8 @@ public class PlayState extends State {
             obstacles.add(obstacle);
         }
         if(obstacles.get(0).getPosition().x<240){
-            theft.setPosition(480-38-38-45,0);
-            theft.getRegion().flip(true,false);
+            ninja.setPosition(480-38-38-45,0);
+            ninja.getRegion().flip(true,false);
             isInleft = false;
         }
 
@@ -65,12 +54,12 @@ public class PlayState extends State {
         switch (state) {
             case Running:
                 if (Gdx.input.justTouched()) {
-                    if (theft.getPosition().x == GroupProject.BRICK) {   //如果余数是0则向右移动；count%2==0
+                    if (ninja.getPosition().x == NinjaJump.BRICK) {   //如果余数是0则向右移动；count%2==0
                         isInleft = true;
-                        theft.jump(isInleft);
-                    } else if (theft.getPosition().x == GroupProject.WIDTH - GroupProject.BRICK - theft.getRegion().getRegionWidth()) {   //否则向左移动；
+                        ninja.jump(isInleft);
+                    } else if (ninja.getPosition().x == NinjaJump.WIDTH - NinjaJump.BRICK - ninja.getRegion().getRegionWidth()) {   //否则向左移动；
                         isInleft = false;
-                        theft.jump(isInleft);
+                        ninja.jump(isInleft);
                     }
                     //count++;
                 }
@@ -78,7 +67,7 @@ public class PlayState extends State {
             case Paused:
                 if (Gdx.input.justTouched()){
                     resume();
-                    GroupProject.outputLabel.setText("");
+                    NinjaJump.outputLabel.setText("");
                 }
 
         }
@@ -91,7 +80,7 @@ public class PlayState extends State {
             case Running:
                 //update();
 
-                theft.update(dt);
+                ninja.update(dt);
 
                 for(int i=0;i<obstacles.size;i++){
                     Obstacle obstacle = obstacles.get(i);
@@ -102,9 +91,9 @@ public class PlayState extends State {
                         nums++;
                     }
 
-                    if(obstacle.collides(theft.getBounds())){
+                    if(obstacle.collides(ninja.getBounds())){
                         //isGameOver = true;
-                        theft.killed();
+                        ninja.killed();
 
                         float t=Gdx.graphics.getDeltaTime();
                         do{
@@ -139,8 +128,8 @@ public class PlayState extends State {
 
 
         sb.begin();
-        sb.draw(bg,0,0,GroupProject.WIDTH,GroupProject.HEIGHT);
-        sb.draw(theft.getRegion(),theft.getPosition().x,theft.getPosition().y);
+        sb.draw(bg,0,0,NinjaJump.WIDTH,NinjaJump.HEIGHT);
+        sb.draw(ninja.getRegion(), ninja.getPosition().x, ninja.getPosition().y);
 
         font.draw(sb,String.valueOf(count),240,700);
         font.setColor(Color.BLACK);
@@ -157,7 +146,7 @@ public class PlayState extends State {
     @Override
     public void dispose() {
         bg.dispose();
-        theft.dispose();
+        ninja.dispose();
         font.dispose();
         for(Obstacle obstacle : obstacles){
             obstacle.dispose();

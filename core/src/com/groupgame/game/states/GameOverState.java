@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.groupgame.game.GroupProject;
+import com.groupgame.game.NinjaJump;
 
 
 public class GameOverState extends State{
@@ -17,7 +17,7 @@ public class GameOverState extends State{
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        cam.setToOrtho(false, GroupProject.WIDTH, GroupProject.HEIGHT);
+        cam.setToOrtho(false, NinjaJump.WIDTH, NinjaJump.HEIGHT);
         background = new Texture("background.png");
         gameover= new Texture("gameover.png");
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);// 防止字体模糊

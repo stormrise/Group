@@ -24,12 +24,12 @@ import com.groupgame.game.states.GameStateManager;
 import com.groupgame.game.states.MenuState;
 import com.groupgame.game.states.PlayState;
 
-public class GroupProject extends ApplicationAdapter {
+public class NinjaJump extends ApplicationAdapter {
 	public static final int WIDTH=480;
 	public static final int HEIGHT=800;
 	public static final int BRICK=38;
 
-	public static final String TITLE="Group Game";
+	public static final String TITLE="NinjaJump";
 	private  GameStateManager gsm;
 
 	private SpriteBatch batch;

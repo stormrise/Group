@@ -7,15 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2D;
-import com.badlogic.gdx.utils.Timer;
-import com.groupgame.game.GroupProject;
+import com.groupgame.game.NinjaJump;
 import com.groupgame.game.states.PlayState;
 
 import java.util.Random;
 
-public class Theft extends Sprite {
+public class Ninja extends Sprite {
     private static final int GRAVITY=-15;
     private Vector2 position;
     private Vector2 velocity;
@@ -27,7 +24,7 @@ public class Theft extends Sprite {
     private Sound jumpSound;
 
 
-    public Theft(int x, int y){
+    public Ninja(int x, int y){
         position=new Vector2(x,y);
         velocity=new Vector2(0,0);
 
@@ -52,22 +49,22 @@ public class Theft extends Sprite {
         velocity.scl(dt);
 
         if(PlayState.isInleft){
-            if(position.x<GroupProject.WIDTH-GroupProject.BRICK*2-region.getRegionWidth()){
+            if(position.x<NinjaJump.WIDTH-NinjaJump.BRICK*2-region.getRegionWidth()){
                 position.add(velocity.x,0);
 
 
             }else{
                 velocity.x=0;
-                position.x=GroupProject.WIDTH-GroupProject.BRICK-region.getRegionWidth();
+                position.x=NinjaJump.WIDTH-NinjaJump.BRICK-region.getRegionWidth();
 
             }
         }else {
-            if(position.x>GroupProject.BRICK){
+            if(position.x>NinjaJump.BRICK){
                 position.add(velocity.x,0);
 
             }else{
                 velocity.x=0;
-                position.x=GroupProject.BRICK;
+                position.x=NinjaJump.BRICK;
 
             }
         }
