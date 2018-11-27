@@ -19,6 +19,7 @@ public class Obstacle extends Sprite {
     private TextureRegion obsRegion;
     private Rectangle bounds;
     private Vector2 position, velocity;
+    private Random r =new Random();
 
     private int GRAVITY=-5;
 
@@ -26,8 +27,14 @@ public class Obstacle extends Sprite {
 
     public Obstacle(float y){
 
-        obstacle=new Texture("bar_left.png");//30,181
-        obsRegion = new TextureRegion(obstacle,30,MathUtils.random(60,181));//MathUtils.random(10,181)
+        if(r.nextBoolean()) {
+            obstacle = new Texture("bar_left.png");
+        }else{
+            obstacle = new Texture("saw.png");
+        }
+
+        //obstacle=new Texture("bar_left.png");//30,181
+        obsRegion = new TextureRegion(obstacle,30,60*MathUtils.random(1,3));//MathUtils.random(10,181)
 
         if(MathUtils.randomBoolean()){
             position=new Vector2(38,y);
