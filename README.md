@@ -1,4 +1,5 @@
-# Ninja Jump
+Ninja Jump
+============
 
 > This is a course project for COMP7506
 > 
@@ -10,8 +11,10 @@
 > Wang,Xichen     
 > Xiong, Shanyu
  
+ 
 
-# Introduction 
+Introduction 
+============
 
 The Ninja Jump App is an Android-based application for phones, which is an adventure game.
 
@@ -23,10 +26,10 @@ You only need to use one finger to click anywhere on the screen. The ninja will 
 Features: cartoon style, small, easy to operate and game difficulty increases with time.
 
 
-# Build
-
-## Dependencies
-
+Build
+=======
+Dependencies
+--------
 This game is based on libGDX, Wiki: https://github.com/libgdx/libgdx
 
 >libGDX is a cross-platform Java game development framework based on OpenGL (ES) that works on Windows, Linux, Mac OS X, Android, your WebGL enabled browser and iOS.
@@ -38,11 +41,13 @@ Import project to Android Studio, everything is set and ready to go.
 
 
 
-## Build with Gradle
+Build with Gradle
+-------
 
 Use latest Android Studio 3.2.1 and gradle 4.6 (Time: Nov 2018)
 
-## Install it 
+Install it 
+-------
 
 After make project successfully in Android Studio, you can run it directly by the 'Run' butthon. 
 
@@ -50,7 +55,8 @@ Remember to choose the Piexl 2 XL as the AVD, because the larger screen is the t
 
 Also, we can choose to run in desktop use java runtime environment.
 
-## Structures 
+Structures 
+-------
 ### Core
 
 All game code in here.
@@ -74,39 +80,38 @@ All game code in here.
 
 `DesktopLauncher.java`is the one start desktop  application, we can define some desktop unique configuration here.
 
-# Game Overview 
+Game Overview 
+=======
 After the game is launched (our game can be used on various platforms such as Android, desktop, etc.), players can directly enter the waiting interface of the game. Just click the button in the middle to start the game.
 
 
-  ![Image text]( 图片链接)
+  ![图片 1.png](https://i.loli.net/2018/11/28/5bfe4e37a0edb.png)
   
   
 The operation of the game is very simple. There are left and right sides of the screen. You only need to use one finger. Click anywhere on the screen. The ninja will jump from the left to the right or jump from the right to the left.
 
 
-  ![Image text]( 图片链接)
-  
+ ![图片 2.png](https://i.loli.net/2018/11/28/5bfe4e373c251.png)  
 
 We set up different kind of ninja images that are randomly generated when the game is loaded. We also provided a wonderful background music to let players can focus on the game and get relax.
 
-  ![Image text]( 图片链接)
+![图片 3.png](https://i.loli.net/2018/11/28/5bfe4e373d886.png)
   
   
 On the top of the screen, the numbers represent the obstacles that the ninja has turned over.
 
 
-  ![Image text]( 这里是你的图片链接)
+![图片 4.png](https://i.loli.net/2018/11/28/5bfe4e373d453.png)
   
   
 When the ninja touches the obstacle, the game will end, and you will enter the end screen. The settle scores show the obstacles that the ninja has turned over.Players can also click the screen anywhere to start a new game again.
 
-图片地址上传git后加载。
 
 
-# Contributors 
+Contributors 
+======
 
 * Li Lingxiao
 * Wang Xichen
 * Xiong Shanyu
-
 
